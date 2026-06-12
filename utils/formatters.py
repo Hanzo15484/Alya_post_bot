@@ -5,121 +5,121 @@ import random
 
 def get_mention(user):
     """Get HTML mention for user"""
-        if user.username:
-                return f"@{user.username}"
-                    return f'<a href="tg://user?id={user.id}">{user.first_name}</a>'
+    if user.username:
+        return f"@{user.username}"
+    return f'<a href="tg://user?id={user.id}">{user.first_name}</a>'
 
-                    def get_uptime():
-                        """Calculate bot uptime"""
-                            from config import BOT_START_TIME
-                                uptime_seconds = int(time.time() - BOT_START_TIME)
-                                    
-                                        days = uptime_seconds // 86400
-                                            hours = (uptime_seconds % 86400) // 3600
-                                                minutes = (uptime_seconds % 3600) // 60
-                                                    seconds = uptime_seconds % 60
-                                                        
-                                                            parts = []
-                                                                if days > 0:
-                                                                        parts.append(f"{days}d")
-                                                                            if hours > 0:
-                                                                                    parts.append(f"{hours}h")
-                                                                                        if minutes > 0:
-                                                                                                parts.append(f"{minutes}m")
-                                                                                                    parts.append(f"{seconds}s")
-                                                                                                        
-                                                                                                            return " ".join(parts)
+def get_uptime():
+    """Calculate bot uptime"""
+    from config import BOT_START_TIME
+    uptime_seconds = int(time.time() - BOT_START_TIME)
+    
+    days = uptime_seconds // 86400
+    hours = (uptime_seconds % 86400) // 3600
+    minutes = (uptime_seconds % 3600) // 60
+    seconds = uptime_seconds % 60
+    
+    parts = []
+    if days > 0:
+        parts.append(f"{days}d")
+    if hours > 0:
+        parts.append(f"{hours}h")
+    if minutes > 0:
+        parts.append(f"{minutes}m")
+    parts.append(f"{seconds}s")
+    
+    return " ".join(parts)
 
-                                                                                                            def get_ping():
-                                                                                                                """Generate realistic ping time"""
-                                                                                                                    return random.randint(8, 15)  # Fast: under 15ms
+def get_ping():
+    """Generate realistic ping time"""
+    return random.randint(8, 15)  # Fast: under 15ms
 
-                                                                                                                    def get_response_time():
-                                                                                                                        """Generate realistic response time"""
-                                                                                                                            return random.randint(10, 30)
+def get_response_time():
+    """Generate realistic response time"""
+    return random.randint(10, 30)
 
-                                                                                                                            def get_speed_status(ping):
-                                                                                                                                """Get speed status based on ping"""
-                                                                                                                                    if ping < 20:
-                                                                                                                                            return "🟢 ꜰᴀꜱᴛ"
-                                                                                                                                                elif 20 <= ping <= 50:
-                                                                                                                                                        return "🟡 ɴᴏʀᴍᴀʟ"
-                                                                                                                                                            else:
-                                                                                                                                                                    return "🔴 ꜱʟᴏᴡ"
+def get_speed_status(ping):
+    """Get speed status based on ping"""
+    if ping < 20:
+        return "🟢 ꜰᴀꜱᴛ"
+    elif 20 <= ping <= 50:
+        return "🟡 ɴᴏʀᴍᴀʟ"
+    else:
+        return "🔴 ꜱʟᴏᴡ"
 
-                                                                                                                                                                    def get_ist_time():
-                                                                                                                                                                        """Get current IST time"""
-                                                                                                                                                                            ist = pytz.timezone('Asia/Kolkata')
-                                                                                                                                                                                return datetime.now(ist).strftime('%Y-%m-%d %H:%M:%S')
+def get_ist_time():
+    """Get current IST time"""
+    ist = pytz.timezone('Asia/Kolkata')
+    return datetime.now(ist).strftime('%Y-%m-%d %H:%M:%S')
 
-                                                                                                                                                                                def format_duration(seconds):
-                                                                                                                                                                                    """Format duration in seconds to readable format"""
-                                                                                                                                                                                        days = seconds // 86400
-                                                                                                                                                                                            hours = (seconds % 86400) // 3600
-                                                                                                                                                                                                minutes = (seconds % 3600) // 60
-                                                                                                                                                                                                    secs = seconds % 60
-                                                                                                                                                                                                        
-                                                                                                                                                                                                            parts = []
-                                                                                                                                                                                                                if days > 0:
-                                                                                                                                                                                                                        parts.append(f"{days}d")
-                                                                                                                                                                                                                            if hours > 0:
-                                                                                                                                                                                                                                    parts.append(f"{hours}h")
-                                                                                                                                                                                                                                        if minutes > 0:
-                                                                                                                                                                                                                                                parts.append(f"{minutes}min")
-                                                                                                                                                                                                                                                    if secs > 0:
-                                                                                                                                                                                                                                                            parts.append(f"{secs}s")
-                                                                                                                                                                                                                                                                
-                                                                                                                                                                                                                                                                    return ", ".join(parts) if parts else "0s"
+def format_duration(seconds):
+    """Format duration in seconds to readable format"""
+    days = seconds // 86400
+    hours = (seconds % 86400) // 3600
+    minutes = (seconds % 3600) // 60
+    secs = seconds % 60
+    
+    parts = []
+    if days > 0:
+        parts.append(f"{days}d")
+    if hours > 0:
+        parts.append(f"{hours}h")
+    if minutes > 0:
+        parts.append(f"{minutes}min")
+    if secs > 0:
+        parts.append(f"{secs}s")
+    
+    return ", ".join(parts) if parts else "0s"
 
-                                                                                                                                                                                                                                                                    def parse_duration(duration_str):
-                                                                                                                                                                                                                                                                        """Parse duration string like '2d', '6h', '5min', '1y', '3m' to seconds"""
-                                                                                                                                                                                                                                                                            if not duration_str or duration_str == '0':
-                                                                                                                                                                                                                                                                                    return None
-                                                                                                                                                                                                                                                                                        
-                                                                                                                                                                                                                                                                                            duration_str = duration_str.lower().strip()
-                                                                                                                                                                                                                                                                                                
-                                                                                                                                                                                                                                                                                                    # Extract number and unit
-                                                                                                                                                                                                                                                                                                        number = ''
-                                                                                                                                                                                                                                                                                                            unit = ''
-                                                                                                                                                                                                                                                                                                                for char in duration_str:
-                                                                                                                                                                                                                                                                                                                        if char.isdigit() or char == '.':
-                                                                                                                                                                                                                                                                                                                                    number += char
-                                                                                                                                                                                                                                                                                                                                            else:
-                                                                                                                                                                                                                                                                                                                                                        unit += char
-                                                                                                                                                                                                                                                                                                                                                            
-                                                                                                                                                                                                                                                                                                                                                                if not number:
-                                                                                                                                                                                                                                                                                                                                                                        return None
-                                                                                                                                                                                                                                                                                                                                                                            
-                                                                                                                                                                                                                                                                                                                                                                                number = float(number)
-                                                                                                                                                                                                                                                                                                                                                                                    
-                                                                                                                                                                                                                                                                                                                                                                                        # Convert to seconds
-                                                                                                                                                                                                                                                                                                                                                                                            if unit in ['y', 'year', 'years']:
-                                                                                                                                                                                                                                                                                                                                                                                                    return int(number * 365 * 24 * 3600)
-                                                                                                                                                                                                                                                                                                                                                                                                        elif unit in ['m', 'month', 'months']:
-                                                                                                                                                                                                                                                                                                                                                                                                                return int(number * 30 * 24 * 3600)
-                                                                                                                                                                                                                                                                                                                                                                                                                    elif unit in ['d', 'day', 'days']:
-                                                                                                                                                                                                                                                                                                                                                                                                                            return int(number * 24 * 3600)
-                                                                                                                                                                                                                                                                                                                                                                                                                                elif unit in ['h', 'hr', 'hrs', 'hour', 'hours']:
-                                                                                                                                                                                                                                                                                                                                                                                                                                        return int(number * 3600)
-                                                                                                                                                                                                                                                                                                                                                                                                                                            elif unit in ['min', 'mins', 'minute', 'minutes']:
-                                                                                                                                                                                                                                                                                                                                                                                                                                                    return int(number * 60)
-                                                                                                                                                                                                                                                                                                                                                                                                                                                        elif unit in ['s', 'sec', 'secs', 'second', 'seconds']:
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                return int(number)
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                        return None
+def parse_duration(duration_str):
+    """Parse duration string like '2d', '6h', '5min', '1y', '3m' to seconds"""
+    if not duration_str or duration_str == '0':
+        return None
+    
+    duration_str = duration_str.lower().strip()
+    
+    # Extract number and unit
+    number = ''
+    unit = ''
+    for char in duration_str:
+        if char.isdigit() or char == '.':
+            number += char
+        else:
+            unit += char
+    
+    if not number:
+        return None
+    
+    number = float(number)
+    
+    # Convert to seconds
+    if unit in ['y', 'year', 'years']:
+        return int(number * 365 * 24 * 3600)
+    elif unit in ['m', 'month', 'months']:
+        return int(number * 30 * 24 * 3600)
+    elif unit in ['d', 'day', 'days']:
+        return int(number * 24 * 3600)
+    elif unit in ['h', 'hr', 'hrs', 'hour', 'hours']:
+        return int(number * 3600)
+    elif unit in ['min', 'mins', 'minute', 'minutes']:
+        return int(number * 60)
+    elif unit in ['s', 'sec', 'secs', 'second', 'seconds']:
+        return int(number)
+    
+    return None
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                        def parse_time_format(time_str):
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            """Parse time in format hh:mm:ss to seconds"""
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                try:
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        parts = time_str.split(':')
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                if len(parts) == 3:
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            h, m, s = map(int, parts)
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        return h * 3600 + m * 60 + s
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                elif len(parts) == 2:
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            m, s = map(int, parts)
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        return m * 60 + s
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                elif len(parts) == 1:
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            return int(parts[0])
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                except:
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        pass
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            return None
+def parse_time_format(time_str):
+    """Parse time in format hh:mm:ss to seconds"""
+    try:
+        parts = time_str.split(':')
+        if len(parts) == 3:
+            h, m, s = map(int, parts)
+            return h * 3600 + m * 60 + s
+        elif len(parts) == 2:
+            m, s = map(int, parts)
+            return m * 60 + s
+        elif len(parts) == 1:
+            return int(parts[0])
+    except:
+        pass
+    return None
