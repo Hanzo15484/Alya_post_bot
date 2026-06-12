@@ -288,6 +288,11 @@ async def back_to_settings(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     await query.edit_message_text(settings_text, reply_markup=reply_markup, parse_mode='HTML')
 
+async def close_msg(update, context):
+    query = update.callback_query
+    await query.answer()
+    await query.message.delete()
+    
 # Conversation handler for settings
 settings_conv_handler = ConversationHandler(
     entry_points=[
