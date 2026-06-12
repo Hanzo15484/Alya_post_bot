@@ -3,6 +3,7 @@ from telegram.ext import ContextTypes, CommandHandler, MessageHandler, filters, 
 from database import db
 from utils.decorators import admin_only, owner_only
 from utils.formatters import get_mention
+from utils.message_utils import safe_edit_message
 import asyncio
 
 # Temporary storage for waiting channel operations
@@ -54,7 +55,7 @@ async def handle_channel_message(update: Update, context: ContextTypes.DEFAULT_T
     invite_link = None
     
     # Check if it's a forwarded message from a channel
-    if message.forward_from_chat and message.forward_from_chat.type == 'channel':
+    if hasattr(message, 'forward_from_chat') and message.forward_from_chat and message.forward_from_chat.type == 'channel':
         channel = message.forward_from_chat
         channel_id = channel.id
         channel_name = channel.title
