@@ -2,6 +2,7 @@ from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes, CommandHandler
 from database import db
 from utils.formatters import get_mention
+from utils.message_utils import safe_edit_message
 
 async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Send start message with welcome and buttons"""
@@ -59,9 +60,6 @@ async def about_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
     
-    # Show "please wait" first
-    await query.edit_message_text("ᴩʟᴇᴀꜱᴇ ᴡᴀɪᴛ...")
-    
     about_text = (
         "ʙᴏᴛ ɴᴀᴍᴇ - ᴀʟyᴀ\n"
         "ʙᴏᴛ ᴜsᴇʀɴᴀᴍᴇ - @Alya_postbot\n"
@@ -79,19 +77,12 @@ async def about_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     
-    await query.edit_message_text(
-        text=about_text,
-        reply_markup=reply_markup,
-        parse_mode='HTML'
-    )
+    await safe_edit_message(query, about_text, reply_markup, 'HTML')
 
 async def help_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle help button callback"""
     query = update.callback_query
     await query.answer()
-    
-    # Show "please wait" first
-    await query.edit_message_text("ᴩʟᴇᴀꜱᴇ ᴡᴀɪᴛ...")
     
     help_text = db.get_setting('help_text') or (
         "🌸 ʙᴏᴛ ᴄᴏᴍᴍᴀɴᴅꜱ:\n\n"
@@ -119,19 +110,12 @@ async def help_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     
-    await query.edit_message_text(
-        text=help_text,
-        reply_markup=reply_markup,
-        parse_mode='HTML'
-    )
+    await safe_edit_message(query, help_text, reply_markup, 'HTML')
 
 async def back_to_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle back button to return to start menu"""
     query = update.callback_query
     await query.answer()
-    
-    # Show "please wait" first
-    await query.edit_message_text("ᴩʟᴇᴀꜱᴇ ᴡᴀɪᴛ...")
     
     user = query.from_user
     mention = get_mention(user)
@@ -157,11 +141,7 @@ async def back_to_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     
-    await query.edit_message_text(
-        text=start_text,
-        reply_markup=reply_markup,
-        parse_mode='HTML'
-    )
+    await safe_edit_message(query, start_text, reply_markup, 'HTML')
 
 async def close_msg(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Close/delete the message"""
